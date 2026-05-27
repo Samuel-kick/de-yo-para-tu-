@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres ser mi virtualita? 💕</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ffe5ec, #ffb3c6);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Contenedor principal */
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 75, 110, 0.2);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 2px solid #ff85a1;
+            z-index: 10;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #ff477e;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .subtext {
+            color: #ff7096;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            display: block;
+        }
+
+        /* Botones */
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+            height: 50px;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        #btn-yes {
+            background-color: #ff477e;
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 71, 126, 0.4);
+        }
+
+        #btn-yes:hover {
+            transform: scale(1.1);
+            background-color: #ff0a54;
+        }
+
+        #btn-no {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            border: 1px solid #dee2e6;
+            position: absolute;
+        }
+
+        /* Corazones flotantes de fondo */
+        .heart {
+            position: absolute;
+            color: #ff85a1;
+            font-size: 20px;
+            opacity: 0.6;
+            animation: float 4s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>Quieres ser mi...</h1>
+        <span class="subtext">virtualita? 💕</span>
+        
+        <div class="buttons">
+            <button id="btn-yes">¡SÍ! 💖</button>
+            <button id="btn-no">No 😢</button>
+        </div>
+    </div>
+
+    <script>
+        const btnNo = document.getElementById('btn-no');
+        const btnYes = document.getElementById('btn-yes');
+
+        // Colocar el botón "No" en su posición inicial correcta dentro del flujo
+        btnNo.style.left = '180px'; 
+
+        // Función para mover el botón "No" cuando pasen el mouse o lo toquen
+        function moverBotonNo() {
+            // Generar posiciones aleatorias dentro de la pantalla
+            const x = Math.random() * (window.innerWidth - btnNo.offsetWidth - 20);
+            const y = Math.random() * (window.innerHeight - btnNo.offsetHeight - 20);
+            
+            // Sacarlo del contenedor y moverlo por toda la pantalla
+            btnNo.style.position = 'fixed';
+            btnNo.style.left = `${x}px`;
+            btnNo.style.top = `${y}px`;
+        }
+
+        btnNo.addEventListener('mouseenter', moverBotonNo);
+        btnNo.addEventListener('touchstart', moverBotonNo); // Para que también funcione en celulares
+
+        // Acción cuando le da que SÍ
+        btnYes.addEventListener('click', () => {
+            document.querySelector('.card').innerHTML = `
+                <h1 style="font-size: 2.5rem;">¡Sabía que dirías que sí! 💘</h1>
+                <p style="color: #ff477e; font-size: 1.2rem; margin-top: 15px;">Me haces el más feliz del mundo virtual y real. 😍✨</p>
+            `;
+            // Multiplicar corazones al ganar
+            for (let i = 0; i < 30; i++) {
+                crearCorazon();
+            }
+        });
+
+        // Crear corazones flotantes continuamente
+        function crearCorazon() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's'; // Entre 2 y 5 segundos
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        setInterval(crearCorazon, 300);
+    </script>
+</body>
+</html>
